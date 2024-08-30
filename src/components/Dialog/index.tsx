@@ -1,10 +1,10 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react'
 
 type Props = {
-	isOpen: boolean;
-	children: ReactNode;
-	onClose: () => void;
-};
+	isOpen: boolean
+	children: ReactNode
+	onClose: () => void
+}
 
 export default function Dialog({ isOpen, children, onClose }: Props) {
 	return isOpen ? (
@@ -22,5 +22,5 @@ export default function Dialog({ isOpen, children, onClose }: Props) {
 				{children}
 			</div>
 		</dialog>
-	) : null;
+	) : null
 }

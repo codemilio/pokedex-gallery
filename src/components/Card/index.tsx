@@ -1,25 +1,25 @@
-"use client";
-import type { Dispatch, SetStateAction } from "react";
+'use client'
+import type { Dispatch, SetStateAction } from 'react'
 
 type Props = {
-	position: number;
-	onSelectNumber: Dispatch<SetStateAction<number | undefined>>;
-	handleClick: () => void;
-	imageURL: string;
-};
+	position: number
+	onSelectNumber: Dispatch<SetStateAction<number | undefined>>
+	handleClick: () => void
+	imageURL: string
+}
 
 export default function Card({
 	position,
 	onSelectNumber,
 	handleClick,
-	imageURL,
+	imageURL
 }: Props) {
-	const numberPosition = position < 10 ? `0${position}` : position;
+	const numberPosition = position < 10 ? `0${position}` : position
 
 	const openModal = () => {
-		onSelectNumber(position);
-		handleClick();
-	};
+		onSelectNumber(position)
+		handleClick()
+	}
 
 	return (
 		<button
@@ -30,5 +30,5 @@ export default function Card({
 				<img src={imageURL} alt="" className="h-full" />
 			</div>
 		</button>
-	);
+	)
 }
