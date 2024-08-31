@@ -20,14 +20,19 @@ export default function Gallery() {
 
 	const getCards = async () => {
 		const cards = await PokemonTCG.findCardsByQueries({ page: 1, pageSize: 9 })
+		console.log(cards)
 		cards.map((item) =>
 			setCardImageList((prev) => [...prev, item.images.small])
-		)
-	}
+	)
+}
 
-	getCards()
+// getCards()
+const t = new SpeechSynthesisUtterance("Olá meu nome é carlos")
+t.pitch = 0.6
+t.rate = 1.5
+speechSynthesis.speak(t)
 
-	return (
+return (
 		<section className="w-full flex flex-row flex-wrap justify-center items-center gap-4 p-4">
 			{Array.from({ length: 9 }).map((_, i) => (
 				<Card
