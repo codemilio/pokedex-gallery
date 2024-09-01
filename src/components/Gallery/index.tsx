@@ -1,21 +1,16 @@
 import { PokemonTCG } from 'pokemon-tcg-sdk-typescript'
 import { useState } from 'react'
 import Card from '../Card'
-import Dialog from '../Dialog'
 
-export default function Gallery() {
-	const [showDialog, setShowDialog] = useState(false)
-	const [selectedCard, setSelectedCard] = useState<number | undefined>(
-		undefined
-	)
+type Props = {
+	isCustomDeck?: boolean
+}
+export default function Gallery({ isCustomDeck = false }: Props) {
+	const [selectedCard, setSelectedCard] = useState<number | undefined>()
 	const [cardImageList, setCardImageList] = useState<string[]>([])
 
-	const closeDialog = () => {
-		setShowDialog(false)
-	}
-
-	const handleClickCard = () => {
-		setShowDialog(true)
+	const handleSelectCard = (cardNumber: number) => {
+		setSelectedCard(cardNumber)
 	}
 
 	const getCards = async () => {
@@ -23,30 +18,28 @@ export default function Gallery() {
 		console.log(cards)
 		cards.map((item) =>
 			setCardImageList((prev) => [...prev, item.images.small])
-	)
-}
+		)
+	}
 
-// getCards()
-const t = new SpeechSynthesisUtterance("Olá meu nome é carlos")
-t.pitch = 0.6
-t.rate = 1.5
-speechSynthesis.speak(t)
+	// getCards()
+	// const t = new SpeechSynthesisUtterance("Olá meu nome é carlos")
+	// t.pitch = 0.6
+	// t.rate = 1.5
+	// speechSynthesis.speak(t)
 
-return (
-		<section className="w-full flex flex-row flex-wrap justify-center items-center gap-4 p-4">
-			{Array.from({ length: 9 }).map((_, i) => (
-				<Card
-					handleClick={handleClickCard}
-					position={i + 1}
-					onSelectNumber={setSelectedCard}
-					key={i.toString()}
-					imageURL={cardImageList[i]}
-				/>
-			))}
-
-			<Dialog isOpen={showDialog} onClose={closeDialog}>
-				<h2> {selectedCard} </h2>
-			</Dialog>
-		</section>
+	return (
+		<div className='flex-1 flex flex-col first:border-r-8 border-black p-4'>
+			<span className='text-white'> vc selecionou a carta: {selectedCard} </span>
+			<section className="w-full flex flex-row flex-wrap justify-center items-center gap-4 p-4">
+				{Array.from({ length: 9 }).map((_, i) => (
+					<Card
+						position={i + 1}
+						onSelectCard={handleSelectCard}
+						imageURL={cardImageList[i]}
+						key={i.toString()}
+					/>
+				))}
+			</section>
+		</div>
 	)
 }
