@@ -28,9 +28,9 @@ export default function Gallery({ isCustomDeck = false }: Props) {
 	// speechSynthesis.speak(t)
 
 	return (
-		<div className='flex-1 flex flex-col first:border-r-8 border-black p-4'>
+		<div className='w-full h-full flex flex-col p-4'>
 			<span className='text-white'> vc selecionou a carta: {selectedCard} </span>
-			<section className="w-full flex flex-row flex-wrap justify-center items-center gap-4 p-4">
+			<section className="flex-1 rounded-md bg-gray-50 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4 overflow-y-hidden">
 				{Array.from({ length: 9 }).map((_, i) => (
 					<Card
 						position={i + 1}
