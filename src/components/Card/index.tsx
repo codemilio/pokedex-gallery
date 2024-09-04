@@ -12,6 +12,7 @@ export default function Card({ position, onSelectCard, imageURL }: Props) {
 		onSelectCard(position)
 	}
 
+	
 	return (
 		<div className="flex justify-center">
 			<button
