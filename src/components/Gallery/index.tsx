@@ -37,6 +37,7 @@ export default function Gallery({ isCustomDeck = false }: Props) {
 						onSelectCard={handleSelectCard}
 						imageURL={cardImageList[i]}
 						key={i.toString()}
+						isSelected={i+1 === selectedCard}
 					/>
 				))}
 			</section>
