@@ -5,6 +5,7 @@ import Card from '../Card'
 type Props = {
 	isCustomDeck?: boolean
 }
+
 export default function Gallery({ isCustomDeck = false }: Props) {
 	const [selectedCard, setSelectedCard] = useState<number | undefined>()
 	const [cardImageList, setCardImageList] = useState<string[]>([])
@@ -28,16 +29,16 @@ export default function Gallery({ isCustomDeck = false }: Props) {
 	// speechSynthesis.speak(t)
 
 	return (
-		<div className='w-full h-full flex flex-col p-4'>
-			<span className='text-white'> vc selecionou a carta: {selectedCard} </span>
+		<div className="w-full h-full flex flex-col p-4">
+			<span className="text-white">vc selecionou a carta: {selectedCard}</span>
 			<section className="flex-1 rounded-md bg-gray-50 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4 overflow-y-hidden">
 				{Array.from({ length: 9 }).map((_, i) => (
 					<Card
+						key={i.toString()}
 						position={i + 1}
 						onSelectCard={handleSelectCard}
 						imageURL={cardImageList[i]}
-						key={i.toString()}
-						isSelected={i+1 === selectedCard}
+						isSelected={i + 1 === selectedCard}
 					/>
 				))}
 			</section>

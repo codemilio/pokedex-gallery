@@ -33,8 +33,7 @@ export default function Card({
 				style={{ maxHeight: 'calc((100vh - 10rem) / 3)' }}
 			>
 				<div className="w-full h-full rounded-md flex justify-center items-center bg-gray-300 text-[#191A1C] font-black text-4xl">
-					{/* <img src={imageURL} alt="" className="h-full" /> */}
-					{numberPosition}
+					<img src={imageURL} alt="" className="h-full" />
 				</div>
 			</button>
 		</div>
