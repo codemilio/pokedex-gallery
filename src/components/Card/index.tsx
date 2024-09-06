@@ -35,7 +35,6 @@ export default function Card({
 				<div className="w-full h-full rounded-md flex justify-center items-center bg-gray-300 text-[#191A1C] font-black text-4xl">
 					{/* <img src={imageURL} alt="" className="h-full" /> */}
 					{numberPosition}
-					{isSelected ? 'v' : 'f'}
 				</div>
 			</button>
 		</div>
