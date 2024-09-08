@@ -1,23 +1,32 @@
 'use client'
+import type { CardType } from '@/utils/contexts/cards.context'
 import clsx from 'clsx'
 
 type Props = {
+	id: string
 	position: number
-	onSelectCard: (cardNumber: number) => void
+	onSelectCard: (card: CardType) => void
 	imageURL: string
 	isSelected?: boolean
 }
 
 export default function Card({
+	id,
 	position,
 	onSelectCard,
 	imageURL,
 	isSelected = false
 }: Props) {
-	const numberPosition = position < 10 ? `0${position}` : position
+
 	const selectCard = () => {
-		onSelectCard(position)
+		onSelectCard({
+			id,
+			imageUrl,
+			name,
+			position
+		})
 	}
+
 
 	return (
 		<div className="flex justify-center">

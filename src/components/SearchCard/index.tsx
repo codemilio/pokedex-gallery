@@ -27,7 +27,7 @@ export function SearchCard() {
 		)
 	}
 
-	const handleSelectCard = (cardNumber: number) => {
+	const handleSelectCard = (cardNumber: string) => {
 		console.log(cardNumber)
 	}
 
@@ -44,7 +44,11 @@ export function SearchCard() {
 
 				<aside className="w-full flex flex-col gap-y-2">
 					<div className="w-full flex gap-x-2 h-fit">
-						<input className="w-full h-8 rounded-sm" name="search" onChange={handleChangeName} />
+						<input
+							className="w-full h-8 rounded-sm"
+							name="search"
+							onChange={handleChangeName}
+						/>
 						<input className="w-12 h-8 rounded-sm" name="selected-slot" />
 					</div>
 					<button type="button" className="bg-yellow-300" onClick={getCards}>
@@ -57,6 +61,7 @@ export function SearchCard() {
 				{cards?.length &&
 					cards.map((card, index) => (
 						<Card
+							id={card.id}
 							key={card.id}
 							position={index + 1}
 							imageURL={card.imageUrl}
@@ -65,9 +70,17 @@ export function SearchCard() {
 					))}
 			</div>
 
-			<button type="button" className="bg-yellow-300" onClick={getCards}>
-						Pesquisar
-					</button>
+			<div className='flex w-full justify-between'>
+				<button type="button" className="bg-y''ellow-300">
+					Página anterior
+				</button>
+				<button type="button" className="bg-yellow-300">
+					2
+				</button>
+				<button type="button" className="bg-yellow-300">
+					Próxima página
+				</button>
+			</div>
 		</section>
 	)
 }
