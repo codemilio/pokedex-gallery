@@ -3,28 +3,19 @@ import type { CardType } from '@/utils/contexts/cards.context'
 import clsx from 'clsx'
 
 type Props = {
-	id: string
-	position: number
+	cardData: CardType
 	onSelectCard: (card: CardType) => void
-	imageURL: string
 	isSelected?: boolean
 }
 
 export default function Card({
-	id,
-	position,
+	cardData,
 	onSelectCard,
-	imageURL,
 	isSelected = false
 }: Props) {
 
 	const selectCard = () => {
-		onSelectCard({
-			id,
-			imageUrl,
-			name,
-			position
-		})
+		onSelectCard(cardData)
 	}
 
 
@@ -42,7 +33,7 @@ export default function Card({
 				style={{ maxHeight: 'calc((100vh - 10rem) / 3)' }}
 			>
 				<div className="w-full h-full rounded-md flex justify-center items-center bg-gray-300 text-[#191A1C] font-black text-4xl">
-					<img src={imageURL} alt="" className="h-full" />
+					<img src={cardData.imageUrl} alt="" className="h-full" />
 				</div>
 			</button>
 		</div>

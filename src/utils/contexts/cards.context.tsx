@@ -1,6 +1,6 @@
 import { type ReactNode, createContext, useContext, useState } from 'react'
 
-type CardType = {
+export type CardType = {
 	id: string
 	name: string
 	imageUrl: string
@@ -21,7 +21,7 @@ const InitialDeckState: CardType[] = [
 		id: '00001',
 		imageUrl: '',
 		name: 'void',
-		position: 1
+		position: 1,
 	},
 	{
 		id: '00002',
