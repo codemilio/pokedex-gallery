@@ -1,14 +1,10 @@
+import { type CardType, useCardsContext } from '@/utils/contexts/cards.context'
 import { PokemonTCG } from 'pokemon-tcg-sdk-typescript'
 import { type ChangeEvent, useState } from 'react'
 import Card from '../Card'
 
-type CardType = {
-	id: string
-	name: string
-	imageUrl: string
-}
-
 export function SearchCard() {
+	const { onAddCard, cardToAdd, changeCard } = useCardsContext()
 	const [name, setName] = useState<string | undefined>(undefined)
 	const [cards, setCards] = useState<CardType[] | null>(null)
 
@@ -19,20 +15,22 @@ export function SearchCard() {
 			pageSize: 9
 		})
 		setCards(
-			response.map((card) => ({
+			response.map((card, index) => ({
 				id: card.id,
 				name: card.name,
-				imageUrl: card.images.small
+				imageUrl: card.images.small,
+				position: index
 			}))
 		)
 	}
 
-	const handleSelectCard = (cardNumber: string) => {
-		console.log(cardNumber)
-	}
-
 	const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
 		setName(e.target.value)
+	}
+
+	const isSelectedCard = (index: number) => {
+		if (!cardToAdd) return false
+		return cardToAdd.position === index 
 	}
 
 	return (
@@ -54,23 +52,18 @@ export function SearchCard() {
 					<button type="button" className="bg-yellow-300" onClick={getCards}>
 						Pesquisar
 					</button>
+					<button type="button" className="bg-yellow-300" onClick={changeCard}>
+						trocar
+					</button>
 				</aside>
 			</header>
 
 			<div className="flex-1 flex flex-wrap w-full rounded-md bg-gray-400">
 				{cards?.length &&
-					cards.map((card, index) => (
-						<Card
-							id={card.id}
-							key={card.id}
-							position={index + 1}
-							imageURL={card.imageUrl}
-							onSelectCard={handleSelectCard}
-						/>
-					))}
+					cards.map((card, index) => <Card cardData={card} key={card.id} onSelectCard={onAddCard} isSelected={isSelectedCard(index)}/>)}
 			</div>
 
-			<div className='flex w-full justify-between'>
+			<div className="flex w-full justify-between">
 				<button type="button" className="bg-y''ellow-300">
 					Página anterior
 				</button>

@@ -8,11 +8,13 @@ export type CardType = {
 }
 
 interface CardContextProps {
-	cardsOnPage: CardType[] 
-	selectedCard: CardType | null 
+	cardsOnPage: CardType[]
+	cardToAdd: CardType | null
+	selectedCard: CardType | null
 	onSetSelectedCard: (card: CardType) => void
+	onAddCard: (card: CardType) => void
+	changeCard: () => void
 }
-
 
 const CardsContext = createContext<CardContextProps | undefined>(undefined)
 
@@ -21,7 +23,7 @@ const InitialDeckState: CardType[] = [
 		id: '00001',
 		imageUrl: '',
 		name: 'void',
-		position: 1,
+		position: 1
 	},
 	{
 		id: '00002',
@@ -70,19 +72,35 @@ const InitialDeckState: CardType[] = [
 		imageUrl: '',
 		name: 'void',
 		position: 9
-	},
+	}
 ]
 
 export const CardsContextProvider = ({ children }: { children: ReactNode }) => {
+	const [cardToAdd, setCardToAdd] = useState<CardType | null>(null)
 	const [selectedCard, setSelectedCard] = useState<CardType | null>(null)
 	const [cardsOnPage, setCardsOnPage] = useState<CardType[]>(InitialDeckState)
+
+	const onAddCard = (card: CardType) => {
+		setCardToAdd(card)
+	}
 
 	const onSetSelectedCard = (card: CardType) => {
 		setSelectedCard(card)
 	}
 
+	const changeCard = () => {
+		if (!selectedCard || !cardToAdd) return
+		const id = selectedCard.id
+
+		setCardsOnPage((prev) =>
+			prev.map((item) => (item.id === id ? { ...cardToAdd, position: item.position, } : item))
+		)
+	}
+
 	return (
-		<CardsContext.Provider value={{ selectedCard, onSetSelectedCard, cardsOnPage }}>
+		<CardsContext.Provider
+			value={{ selectedCard, onSetSelectedCard, cardsOnPage, onAddCard, changeCard, cardToAdd }}
+		>
 			{children}
 		</CardsContext.Provider>
 	)
