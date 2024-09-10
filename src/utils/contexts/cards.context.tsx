@@ -13,7 +13,8 @@ interface CardContextProps {
 	selectedCard: CardType | null
 	onSetSelectedCard: (card: CardType) => void
 	onAddCard: (card: CardType) => void
-	changeCard: () => void
+	onChangeCard: () => void
+	onDeleteCardSelected: () => void
 }
 
 const CardsContext = createContext<CardContextProps | undefined>(undefined)
@@ -88,18 +89,38 @@ export const CardsContextProvider = ({ children }: { children: ReactNode }) => {
 		setSelectedCard(card)
 	}
 
-	const changeCard = () => {
+	const onChangeCard = () => {
 		if (!selectedCard || !cardToAdd) return
 		const id = selectedCard.id
 
 		setCardsOnPage((prev) =>
-			prev.map((item) => (item.id === id ? { ...cardToAdd, position: item.position, } : item))
+			prev.map((item) =>
+				item.id === id ? { ...cardToAdd, position: item.position } : item
+			)
+		)
+	}
+
+	const onDeleteCardSelected = () => {
+		if (!selectedCard || !cardToAdd) return
+		const { id, position } = selectedCard
+		const blankCardOnPosition = InitialDeckState[position - 1]
+
+		setCardsOnPage((prev) =>
+			prev.map((item) => (item.id === id ? { ...blankCardOnPosition } : item))
 		)
 	}
 
 	return (
 		<CardsContext.Provider
-			value={{ selectedCard, onSetSelectedCard, cardsOnPage, onAddCard, changeCard, cardToAdd }}
+			value={{
+				selectedCard,
+				onSetSelectedCard,
+				cardsOnPage,
+				onAddCard,
+				onChangeCard,
+				cardToAdd,
+				onDeleteCardSelected
+			}}
 		>
 			{children}
 		</CardsContext.Provider>

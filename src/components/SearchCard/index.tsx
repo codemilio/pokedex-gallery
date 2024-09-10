@@ -4,7 +4,7 @@ import { type ChangeEvent, useState } from 'react'
 import Card from '../Card'
 
 export function SearchCard() {
-	const { onAddCard, cardToAdd, changeCard } = useCardsContext()
+	const { onAddCard, cardToAdd, onChangeCard, onDeleteCardSelected } = useCardsContext()
 	const [name, setName] = useState<string | undefined>(undefined)
 	const [cards, setCards] = useState<CardType[] | null>(null)
 
@@ -52,8 +52,11 @@ export function SearchCard() {
 					<button type="button" className="bg-yellow-300" onClick={getCards}>
 						Pesquisar
 					</button>
-					<button type="button" className="bg-yellow-300" onClick={changeCard}>
+					<button type="button" className="bg-yellow-300" onClick={onChangeCard}>
 						trocar
+					</button>
+					<button type="button" className="bg-yellow-300" onClick={onDeleteCardSelected}>
+						deletar
 					</button>
 				</aside>
 			</header>
