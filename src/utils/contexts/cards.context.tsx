@@ -1,3 +1,4 @@
+import { PokemonTCG } from 'pokemon-tcg-sdk-typescript'
 import { type ReactNode, createContext, useContext, useState } from 'react'
 
 export type CardType = {
@@ -15,6 +16,7 @@ interface CardContextProps {
 	onAddCard: (card: CardType) => void
 	onChangeCard: () => void
 	onDeleteCardSelected: () => void
+	onSpeakAboutPokemon: () => Promise<void>
 }
 
 const CardsContext = createContext<CardContextProps | undefined>(undefined)
@@ -110,6 +112,20 @@ export const CardsContextProvider = ({ children }: { children: ReactNode }) => {
 		)
 	}
 
+	const onSpeakAboutPokemon = async () => {
+		if (!selectedCard || !cardToAdd) return
+		const { id } = selectedCard
+		const response = await PokemonTCG.findCardByID(id)
+		const { name, types, flavorText } = response
+		const flatTypes = types ? types[0] : 'normal'
+		const pokedexText = `${name} é um pokemon do tipo ${flatTypes} e ${flavorText}`
+		console.log(pokedexText)
+		const speaker = new SpeechSynthesisUtterance(pokedexText)
+		speaker.pitch = 0.6
+		speaker.rate = 1.5
+		speechSynthesis.speak(speaker)
+	}
+
 	return (
 		<CardsContext.Provider
 			value={{
@@ -119,7 +135,8 @@ export const CardsContextProvider = ({ children }: { children: ReactNode }) => {
 				onAddCard,
 				onChangeCard,
 				cardToAdd,
-				onDeleteCardSelected
+				onDeleteCardSelected,
+				onSpeakAboutPokemon
 			}}
 		>
 			{children}
